@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 # Update dot files from git repo.
-# Place this script in your crontab.
+# Place this script in your crontab:
+#   */5 * * * * /home/jreisinger/scripts/update-dot-files.pl > /dev/null
 use strict;
 use warnings;
 use File::Temp;
