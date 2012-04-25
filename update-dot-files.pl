@@ -15,7 +15,8 @@ system 'git clone git@github.com:jreisinger/dot-files.git';
 # replace dot files in home dir with the repo version
 chdir 'dot-files';
 for my $file ( glob "*" ) {
-    next if $file eq 'README'; # skip README file
+    next if $file eq 'README';
+    next if $file eq 'update-dot-files.pl';
     my $dotfile = '.' . $file;
     copy( $file, File::Spec->catfile($ENV{'HOME'}, $dotfile) );
 }
