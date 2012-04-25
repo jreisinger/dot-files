@@ -31,3 +31,5 @@ set vb t_vb=
 nnoremap <F2> :set nu! invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+
+" test
