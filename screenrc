@@ -17,7 +17,7 @@ caption string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %u"
 # STARTUP SCREENS
 # ------------------------------------------------------------------------------
 #         Screen_name   Screen #        Startup command
-screen -t monit         0               top
-screen -t bash          1
+#screen -t monit         0               top
+#screen -t bash          1
 
 startup_message off
