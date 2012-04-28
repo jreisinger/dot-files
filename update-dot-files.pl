@@ -7,13 +7,8 @@ use warnings;
 use File::Temp;
 use File::Spec;
 use File::Copy;
-use 5.010;
 
 sub get_dot_files {
-    # clone git repo into a temporary directory
-    my $tmpdir = File::Temp->newdir( DIR => '/tmp' );
-    chdir $tmpdir;
-    system 'git clone git@github.com:jreisinger/dot-files.git';
 
     # get the dot files
     chdir 'dot-files';
@@ -23,8 +18,6 @@ sub get_dot_files {
         next if $file eq 'update-dot-files.pl';
         push @dot_files, $file;
     }
-    # cd to homedir to allow removal of the temporary directory
-    chdir;
 
     return @dot_files;
 }
@@ -35,20 +28,35 @@ sub copy_dot_files {
     my @dot_files = @_;
 
     for my $file ( @dot_files ) {
-        my $dotfile = '.' . $file;
+        my $dotfile;
+        if ( $file =~ /^_/ ) {
+            ($dotfile = $file) =~ s/^_/./;          # e.g. _vimrc
+        } else {
+            ($dotfile = $file) =~ s/^.+?_(.*)/.$1/; # e.g. cygwin_bashrc
+        }
+
         copy( $file, File::Spec->catfile($ENV{'HOME'}, $dotfile) ) and
-            print "=> $file copied\n";
+            print "$file => $dotfile\n";
     }
 }
 
 # MAIN
+
+# clone git repo into a temporary directory
+my $tmpdir = File::Temp->newdir( DIR => '/tmp' );
+chdir $tmpdir;
+system 'git clone git@github.com:jreisinger/dot-files.git';
+
 my @dot_files = get_dot_files;
 
 my $os = $^O;
-given ( $os ) {
-    when( $os eq 'cygwin' ) {
-        @dot_files = grep $_ =~ /^_|^cygwin/, @dot_files;
-        print "@dot_files";
-        continue;
-    }
+if ( $os eq 'cygwin' ) {
+    @dot_files = grep /^_|^cygwin/, @dot_files;
+    copy_dot_files(@dot_files);
+} else {
+    @dot_files = grep /^_/, @dot_files;
+    copy_dot_files(@dot_files);
 }
+
+# cd to homedir to allow removal of the temporary directory
+chdir;
