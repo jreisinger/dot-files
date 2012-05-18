@@ -4,14 +4,8 @@ defscrollback 2048
 # turn sending of screen messages to hardstatus off
 hardstatus off
 
-# An alternative hardstatus to display a bar at the bottom listing the
-# windownames and highlighting the current windowname in blue. (This is only
-# enabled if there is no hardstatus setting for your terminal)
-#
-hardstatus lastline "%?%F%{.R.}%?%3n %t%? [%h]%?"
-
-caption always
-caption string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %u"
+# An alternative hardstatus to display a bar at the bottom.
+hardstatus alwayslastline "%{+b wk}%H%{-b wk} %?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%? %-11=%{gk}%c %{yk}%M%d"
 
 # ------------------------------------------------------------------------------
 # STARTUP SCREENS
