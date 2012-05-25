@@ -1,3 +1,8 @@
+" activate pathogen.vim
+call pathogen#infect()
+" open a NERDTree automatically when vim starts up if no files were specified
+autocmd vimenter * if !argc() | NERDTree | endif
+
 syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype

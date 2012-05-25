@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use File::Spec;
 use File::Copy;
+use File::Path qw(make_path remove_tree);
 
 sub get_dot_files {
 
@@ -37,6 +38,22 @@ sub copy_dot_files {
     }
 }
 
+sub install_vim_nerd_tree {
+
+    # Install pathogen.vim
+    my $autoload_dir = "$ENV{HOME}/.vim/autoload";
+    make_path $autoload_dir unless -e $autoload_dir;
+    system "curl -so $ENV{HOME}/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim";
+
+    # Install NERD tree
+    my $bundle_dir = "$ENV{HOME}/.vim/bundle";
+    mkdir $bundle_dir unless -e $bundle_dir;
+    chdir $bundle_dir;
+    remove_tree "nerdtree";
+    system "git clone https://github.com/scrooloose/nerdtree.git";
+
+}
+
 # MAIN
 my @dot_files = get_dot_files;
 
@@ -48,3 +65,5 @@ if ( $os eq 'cygwin' ) {
     @dot_files = grep /^_/, @dot_files;
     copy_dot_files(@dot_files);
 }
+
+install_vim_nerd_tree();
