@@ -1,7 +1,7 @@
 " activate pathogen.vim
 call pathogen#infect()
 " open a NERDTree automatically when vim starts up if no files were specified
-autocmd vimenter * if !argc() | NERDTree | endif
+nnoremap <F4> :NERDTreeTabsToggle<CR>
 
 syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
