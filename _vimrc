@@ -3,6 +3,9 @@ call pathogen#infect()
 " open a NERDTree automatically when vim starts up if no files were specified
 nnoremap <F4> :NERDTreeTabsToggle<CR>
 
+" make templates work
+autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
+
 syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype

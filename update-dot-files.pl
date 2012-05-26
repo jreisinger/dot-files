@@ -61,6 +61,16 @@ sub install_vim_nerd_tree {
     system "git clone $nerdtree_tabs_repo";
 }
 
+sub install_vim_templates {
+    my $templates_dir = "$ENV{HOME}/.vim/templates";
+    make_path $templates_dir unless -e $templates_dir;
+
+    # Perl template
+    open my $fh, ">", "$templates_dir/pl.template" or die;
+    print $fh "#!/usr/bin/perl\nuse strict;\nuse warnings;\n";
+    close $fh;
+}
+
 # MAIN
 my @dot_files = get_dot_files;
 
@@ -73,4 +83,5 @@ if ( $os eq 'cygwin' ) {
     copy_dot_files(@dot_files);
 }
 
-install_vim_nerd_tree();
+install_vim_nerd_tree;
+install_vim_templates;
