@@ -10,6 +10,8 @@ syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype
 
+set ic  " ignore case during search
+
 " Python completion (Ctrl-O-X). Needs: vim >= 7.0, vim-nox.
 " Problematic on cygwin.
 set ofu=syntaxcomplete#Complete
