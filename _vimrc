@@ -54,3 +54,10 @@ set vb t_vb=
 nnoremap <F2> :set nu! invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+
+" folding
+set foldmethod=manual
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
