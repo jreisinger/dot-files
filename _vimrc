@@ -61,3 +61,5 @@ inoremap <F9> <C-O>za
 nnoremap <F9> za
 onoremap <F9> <C-C>za
 vnoremap <F9> zf
+autocmd BufWinLeave *.* mkview          "save folds
+autocmd BufWinEnter *.* silent loadview "load folds
