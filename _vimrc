@@ -9,6 +9,7 @@ autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
 syntax on                       " syntax highlighting
 filetype on                     " try to detect filetypes
 filetype plugin indent on       " enable loading indent file for filetype
+filetype plugin on              " enable templates
 
 set ic  " ignore case during search
 
@@ -65,3 +66,7 @@ onoremap <F9> <C-C>za
 vnoremap <F9> zf
 autocmd BufWinLeave *.* mkview          "save folds
 autocmd BufWinEnter *.* silent loadview "load folds
+
+" Tidy selected lines (or entire file) with _t:
+nnoremap <silent> _t :%!perltidy -q<Enter>
+vnoremap <silent> _t :!perltidy -q<Enter>
