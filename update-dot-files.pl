@@ -42,7 +42,7 @@ sub install_vim_nerd_tree {
     # Install pathogen.vim
     my $autoload_dir = "$ENV{HOME}/.vim/autoload";
     make_path $autoload_dir unless -e $autoload_dir;
-    my $pathogen_url = 'http://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim';
+    my $pathogen_url = 'https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim';
     system "curl -so $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
 
     my $bundle_dir = "$ENV{HOME}/.vim/bundle";
@@ -51,13 +51,13 @@ sub install_vim_nerd_tree {
     mkdir $bundle_dir unless -e $bundle_dir;
     chdir $bundle_dir;
     remove_tree "nerdtree";
-    my $nerdtree_repo = 'http://github.com/scrooloose/nerdtree.git';
+    my $nerdtree_repo = 'https://github.com/scrooloose/nerdtree.git';
     system "git clone $nerdtree_repo";
 
     # Install NERDtree tabs
     chdir $bundle_dir;
     remove_tree "vim-nerdtree-tabs";
-    my $nerdtree_tabs_repo = 'http://github.com/jistr/vim-nerdtree-tabs.git';
+    my $nerdtree_tabs_repo = 'https://github.com/jistr/vim-nerdtree-tabs.git';
     system "git clone $nerdtree_tabs_repo";
 }
 
