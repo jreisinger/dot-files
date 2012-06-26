@@ -67,6 +67,16 @@ vnoremap <F9> zf
 autocmd BufWinLeave *.* mkview          "save folds
 autocmd BufWinEnter *.* silent loadview "load folds
 
+"" Perl stuff
+
 " Tidy selected lines (or entire file) with _t:
 nnoremap <silent> _t :%!perltidy -q<Enter>
 vnoremap <silent> _t :!perltidy -q<Enter>
+
+" Check syntax: \l
+command PerlLint !perl -c %
+nnoremap <leader>l :PerlLint<CR>
+" Fix errors: :w => :make => :copen => :cn | :cp
+set makeprg=perl\ -c\ -MVi::QuickFix\ %
+set errorformat+=%m\ at\ %f\ line\ %l\.
+set errorformat+=%m\ at\ %f\ line\ %l
