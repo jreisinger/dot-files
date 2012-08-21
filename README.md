@@ -1,8 +1,9 @@
 Personal configuration files
 ============================
 
-Prerequisites:
- - curl
+Prerequisites: curl
+
+Optional packages: vim, vim-perl, perltidy, screen
 
 Usage:
  - clone this repo: `git clone git@github.com:jreisinger/dot-files.git`
