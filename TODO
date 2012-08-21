@@ -1,3 +1,5 @@
-first check all necessary packages are installed
- * curl, vim, vim-perl, perltidy, screen
+First check all necessary/optional packages are installed.
+
+Necessary: curl
+Optional: vim, vim-perl, perltidy, screen
 
