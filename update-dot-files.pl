@@ -86,5 +86,3 @@ if ( $os eq 'cygwin' ) {
 install_vim_nerd_tree;
 install_vim_templates;
 
-print "\n";
-print "You should have: 'vim-perl' and 'perltidy' packages\n";
