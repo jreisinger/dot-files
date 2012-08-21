@@ -1,0 +1,9 @@
+[user]
+	name = Jozef Reisinger
+	email = jozef.reisinger@gmail.com
+[color]
+	ui = true
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
