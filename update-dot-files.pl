@@ -6,14 +6,13 @@ use warnings;
 use File::Spec;
 use File::Copy;
 use File::Path qw(make_path remove_tree);
+use File::Basename;
 
 sub get_dot_files {
+    my $os = shift;
 
-    # get the dot files
     my @dot_files;
-    for my $file ( glob "*" ) {
-        next if $file eq 'README';
-        next if $file eq 'update-dot-files.pl';
+    for my $file ( glob "$os/*" ) {
         push @dot_files, $file;
     }
 
@@ -26,13 +25,9 @@ sub copy_dot_files {
     my @dot_files = @_;
 
     for my $file ( @dot_files ) {
-        my $dotfile;
-        if ( $file =~ /^_/ ) {
-            ($dotfile = $file) =~ s/^_/./;          # e.g. _vimrc
-        } else {
-            ($dotfile = $file) =~ s/^.+?_(.*)/.$1/; # e.g. cygwin_bashrc
-        }
-
+        # $file looks like linux/_vimrc
+        my $dotfile = basename $file;
+        $dotfile =~ s/^_/./;
         copy( $file, File::Spec->catfile($ENV{'HOME'}, $dotfile) ) and
             print "$file => $dotfile\n";
     }
@@ -72,17 +67,17 @@ sub install_vim_templates {
 }
 
 # MAIN
-my @dot_files = get_dot_files;
+
+my @dot_files;
 
 my $os = $^O;
 if ( $os eq 'cygwin' ) {
-    @dot_files = grep /^_|^cygwin/, @dot_files;
-    copy_dot_files(@dot_files);
+    @dot_files = get_dot_files('cygwin');
 } else {
-    @dot_files = grep /^_/, @dot_files;
-    copy_dot_files(@dot_files);
+    @dot_files = get_dot_files('linux');
 }
 
+copy_dot_files(@dot_files);
 install_vim_nerd_tree;
 install_vim_templates;
 
