@@ -1,5 +1,5 @@
-First check all necessary/optional packages are installed.
-
-Necessary: curl
-Optional: vim, vim-perl, perltidy, screen
-
+- replace curl with wget (more common)
+- if dot-files differ, create copy of the local one (e.g. ~/.bashrc_YYYYMMDD)
+- first check all necessary/optional packages are installed
+-- Necessary: curl
+-- Optional: vim, vim-perl, perltidy, screen
