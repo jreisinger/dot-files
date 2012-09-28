@@ -38,7 +38,8 @@ sub install_vim_nerd_tree {
     my $autoload_dir = "$ENV{HOME}/.vim/autoload";
     make_path $autoload_dir unless -e $autoload_dir;
     my $pathogen_url = 'https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim';
-    system "curl -so $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
+    #system "curl -so $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
+    system "wget -q -O $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
 
     my $bundle_dir = "$ENV{HOME}/.vim/bundle";
 
