@@ -29,7 +29,7 @@ sub copy_dot_files {
         my $dotfile = basename $file;
         $dotfile =~ s/^_/./;
         copy( $file, File::Spec->catfile($ENV{'HOME'}, $dotfile) ) and
-            print "$file => $dotfile\n";
+            print "$file => ", File::Spec->catfile($ENV{'HOME'}, $dotfile), "\n";
     }
 }
 
@@ -78,7 +78,10 @@ if ( $os eq 'cygwin' ) {
     @dot_files = get_dot_files('linux');
 }
 
+print "==> Copy dot files\n";
 copy_dot_files(@dot_files);
+print "\n==> Install vim nerd tree\n";
 install_vim_nerd_tree;
+print "\n==> Install vim templates\n";
 install_vim_templates;
 
