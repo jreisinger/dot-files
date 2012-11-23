@@ -1,7 +1,7 @@
 Personal configuration files
 ============================
 
-Prerequisites: `curl`
+Prerequisites: `curl git`
 
 Optional packages: `vim vim-perl vim-nox perltidy screen`
 
