@@ -1,0 +1,11 @@
+screen -q -ls > /dev/null 2>&1
+EV=$?
+if [[ $EV -eq 9 ]]; then
+    # No screen session
+    screen
+elif [[ $EV -eq 10 ]]; then
+    echo "Running but not attachable screen session(s)"
+elif [[ $EV -ge 11 ]]; then
+    # 1 (or more) usable sesssions
+    screen -d -r
+fi
