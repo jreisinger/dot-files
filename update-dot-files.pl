@@ -8,6 +8,7 @@ use File::Copy;
 use File::Path qw(make_path remove_tree);
 use File::Basename;
 use Cwd 'abs_path';
+use File::Compare;
 
 my $script_dir = dirname abs_path($0);
 
@@ -22,20 +23,45 @@ sub get_dot_files {
     return @dot_files;
 }
 
+sub wanna_replace {
+    my($old, $new) = @_;
+
+    while (1) {
+        print "'$old' exists, wanna replace it? [y|n|diff]> ";
+        chomp( my $answer = <STDIN> );
+        system "diff $old $new" if "\L$answer" eq 'diff';
+        return 1                if "\L$answer" eq 'y';
+        return 0                if "\L$answer" eq 'n';
+    }
+}
+
 sub copy_dot_files {
 
     # replace dot files in home dir with the repo version
 
     my @dot_files = @_;
 
-    for my $file (@dot_files) {
+    for my $file_path (@dot_files) {
 
-        # $file looks like linux/_vimrc
-        my $dotfile = basename $file;
-        $dotfile =~ s/^_/./;
-        copy( $file, File::Spec->catfile( $ENV{'HOME'}, $dotfile ) )
-          and print "$file => ", File::Spec->catfile( $ENV{'HOME'}, $dotfile ),
-          "\n";
+        # $file_path looks like linux/_vimrc
+        my $file = basename $file_path;
+        $file =~ s/^_/./;
+        my $file_old = File::Spec->catfile( $ENV{'HOME'}, $file );
+
+        # dot-file already exists and differs from the upstream one
+        if ( -e $file_old and compare( $file_old, $file_path ) != 0 ) {
+            if ( wanna_replace( $file_old, $file_path ) ) {
+                copy( $file_path, $file_old )
+                  and print "$file_path => ", $file_old,
+                  "\n";
+            }
+
+        # dot-file does not exist
+        } elsif ( !-e $file_old ) {
+            copy( $file_path, $file_old )
+              and print "$file_path => ", $file_old,
+              "\n";
+        }
     }
 }
 
