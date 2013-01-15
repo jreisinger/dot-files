@@ -37,30 +37,33 @@ sub wanna_replace {
 
 sub copy_dot_files {
 
-    # replace dot files in home dir with the repo version
+    # Replace dot files in home dir with the repo version.
 
     my @dot_files = @_;
 
-    for my $file_path (@dot_files) {
+    for my $new_file_path (@dot_files) {
 
-        # $file_path looks like linux/_vimrc
-        my $file = basename $file_path;
-        $file =~ s/^_/./;
-        my $file_old = File::Spec->catfile( $ENV{'HOME'}, $file );
+        # $new_file_path looks like linux/_vimrc
+        my $new_file = basename $new_file_path;
+        $new_file =~ s/^_/./;
+        my $old_file_path = File::Spec->catfile( $ENV{'HOME'}, $new_file );
 
         # dot-file already exists and differs from the upstream one
-        if ( -e $file_old and compare( $file_old, $file_path ) != 0 ) {
-            if ( wanna_replace( $file_old, $file_path ) ) {
-                copy( $file_path, $file_old )
-                  and print "$file_path => ", $file_old,
+        if ( -e $old_file_path
+            and compare( $old_file_path, $new_file_path ) != 0 )
+        {
+            if ( wanna_replace( $old_file_path, $new_file_path ) ) {
+                copy( $new_file_path, $old_file_path )
+                  and print "$new_file_path => ", $old_file_path,
                   "\n";
             }
-
-        # dot-file does not exist
-        } elsif ( !-e $file_old ) {
-            copy( $file_path, $file_old )
-              and print "$file_path => ", $file_old,
+        }
+        elsif ( !-e $old_file_path ) {    # dot-file does not exist
+            copy( $new_file_path, $old_file_path )
+              and print "$new_file_path => ", $old_file_path,
               "\n";
+        } else {
+            print "'$new_file_path' and '$old_file_path' are equal\n";
         }
     }
 }
@@ -121,12 +124,13 @@ if ( $os eq 'cygwin' ) {
     @dot_files = get_dot_files('linux');
 }
 
-
-print "==> Copy dot files\n";
+print "--> Updating from repo\n";
+system "git pull";
+print "--> Copy dot files\n";
 copy_dot_files(@dot_files);
-print "\n==> Install vim nerd tree\n";
+print "\n--> Install vim nerd tree\n";
 install_vim_nerd_tree;
-print "\n==> Install vim templates\n";
+print "\n--> Install vim templates\n";
 install_vim_templates;
-print "\n==> Create module-starter config file\n";
+print "\n--> Create module-starter config file\n";
 create_module_starter_config;
