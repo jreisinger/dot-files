@@ -124,9 +124,9 @@ if ( $os eq 'cygwin' ) {
     @dot_files = get_dot_files('linux');
 }
 
-print "--> Updating from repo\n";
+print "\n--> Updating from repo\n";
 system "git pull";
-print "--> Copy dot files\n";
+print "\n--> Copy dot files\n";
 copy_dot_files(@dot_files);
 print "\n--> Install vim nerd tree\n";
 install_vim_nerd_tree;
