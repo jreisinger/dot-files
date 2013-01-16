@@ -63,7 +63,7 @@ sub copy_dot_files {
               and print "$new_file_path => ", $old_file_path,
               "\n";
         } else {
-            print "'$new_file_path' and '$old_file_path' are equal\n";
+            print "'$old_file_path' and '$new_file_path' are equal\n";
         }
     }
 }
