@@ -105,6 +105,18 @@ sub install_vim_templates {
     close $fh;
 }
 
+sub install_vim_markdown {
+    my $bundle_dir = "$ENV{HOME}/.vim/bundle";
+    mkdir $bundle_dir unless -d $bundle_dir;
+    chdir $bundle_dir;
+    if ( -d "vim-markdown" ) {
+        chdir "vim-markdown";
+        system "git pull";
+    } else {
+        system "git clone https://github.com/plasticboy/vim-markdown.git";
+    }
+}
+
 sub create_module_starter_config {
     my $conf_dir = File::Spec->catfile( $ENV{HOME}, '.module-starter' );
     mkdir($conf_dir) unless -d $conf_dir;
@@ -132,5 +144,7 @@ print "\n--> Install vim nerd tree\n";
 install_vim_nerd_tree;
 print "\n--> Install vim templates\n";
 install_vim_templates;
+print "\n--> Install vim-markdown\n";
+install_vim_markdown;
 print "\n--> Create module-starter config file\n";
 create_module_starter_config;
