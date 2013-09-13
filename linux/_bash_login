@@ -1,3 +1,4 @@
+# Attach existing screen session if possible
 screen -q -ls > /dev/null 2>&1
 EV=$?
 if [[ $EV -eq 9 ]]; then
