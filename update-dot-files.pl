@@ -143,14 +143,18 @@ sub write_file {
 sub fillin_dotfiles {
     my $dot_files = shift;
 
-    for my $dot_file (@$dot_files) {
-        if ( $dot_file =~ /_gitconfig/ ) {
+    my $email;
+    for my $dot_file ( glob "~/.*" ) {
+        my $data = read_file($dot_file);
+        next unless $data;
+        next unless $data =~ /YOUR-EMAIL/;
+        unless ($email) {
             print "Enter your email address: ";
-            chomp( my $email = <STDIN> );
-            my $data = read_file($dot_file);
-            $data =~ s/YOUR-EMAIL/$email/;
-            write_file( $dot_file, $data );
+            chomp( $email = <STDIN> );
         }
+        $data =~ s/YOUR-EMAIL/$email/;
+        print "editing '$dot_file'\n";
+        write_file( $dot_file, $data );
     }
 }
 
@@ -165,14 +169,14 @@ if ( $os eq 'cygwin' ) {
     @dot_files = get_dot_files('linux');
 }
 
-print "\n--> Editing dotfiles on the fly\n";
-fillin_dotfiles( \@dot_files );
-
 print "\n--> Updating from repo\n";
 system "git pull";
 
 print "\n--> Copy dot files\n";
 copy_dot_files(@dot_files);
+
+print "\n--> Editing dotfiles on the fly\n";
+fillin_dotfiles( \@dot_files );
 
 print "\n--> Install vim nerd tree\n";
 install_vim_nerd_tree;
