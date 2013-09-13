@@ -117,14 +117,6 @@ sub install_vim_markdown {
     }
 }
 
-sub create_module_starter_config {
-    my $conf_dir = File::Spec->catfile( $ENV{HOME}, '.module-starter' );
-    mkdir($conf_dir) unless -d $conf_dir;
-
-    copy( "$script_dir/_module-starter/config", $conf_dir ) or die "$!";
-    print "$script_dir/_module-starter/config => ", "$conf_dir/config", "\n";
-}
-
 sub read_file {
     my ($filename) = @_;
 
@@ -185,5 +177,3 @@ print "\n--> Install vim templates\n";
 install_vim_templates;
 print "\n--> Install vim-markdown\n";
 install_vim_markdown;
-print "\n--> Create module-starter config file\n";
-create_module_starter_config;
