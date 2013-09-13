@@ -103,6 +103,7 @@ sub install_vim_templates {
     open my $fh, ">", "$templates_dir/pl.template" or die;
     print $fh "#!/usr/bin/perl\nuse strict;\nuse warnings;\n";
     close $fh;
+    print "'$templates_dir/pl.template' installed\n";
 }
 
 sub install_vim_markdown {
@@ -153,7 +154,7 @@ sub fillin_dotfiles {
             chomp( $email = <STDIN> );
         }
         $data =~ s/YOUR-EMAIL/$email/;
-        print "editing '$dot_file'\n";
+        print "edited '$dot_file'\n";
         write_file( $dot_file, $data );
     }
 }
