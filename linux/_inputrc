@@ -1,6 +1,11 @@
+$include /etc/inputrc
+
 # Use Vi, not Emacs, style editing
 set editing-mode vi
 
+#################
+# vi commnad mode
+set keymap vi-command
 # This allows you to search through your history using the up and down arrows,
 # i.e. type "cd /" and press the up arrow and you'll search through everything
 # in your history that starts with "cd /".
@@ -8,3 +13,15 @@ set editing-mode vi
 "\e[B": history-search-forward
 set show-all-if-ambiguous on
 set completion-ignore-case on
+Control-l: clear-screen
+##################
+
+################
+# vi insert mode
+set keymap vi-insert
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set show-all-if-ambiguous on
+set completion-ignore-case on
+Control-l: clear-screen
+################
