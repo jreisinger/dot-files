@@ -24,7 +24,7 @@ sub get_dot_files {
 }
 
 sub wanna_replace {
-    my($old, $new) = @_;
+    my ( $old, $new ) = @_;
 
     while (1) {
         print "'$old' exists, wanna replace it? [y|n|diff]> ";
@@ -57,8 +57,7 @@ sub copy_dot_files {
                   and print "$new_file_path => ", $old_file_path,
                   "\n";
             }
-        }
-        elsif ( !-e $old_file_path ) {    # dot-file does not exist
+        } elsif ( !-e $old_file_path ) {    # dot-file does not exist
             copy( $new_file_path, $old_file_path )
               and print "$new_file_path => ", $old_file_path,
               "\n";
@@ -77,6 +76,7 @@ sub install_vim_nerd_tree {
       'https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim';
 
     system "curl -so $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
+
     #system "wget -q -O $ENV{HOME}/.vim/autoload/pathogen.vim $pathogen_url";
 
     my $bundle_dir = "$ENV{HOME}/.vim/bundle";
@@ -125,6 +125,43 @@ sub create_module_starter_config {
     print "$script_dir/_module-starter/config => ", "$conf_dir/config", "\n";
 }
 
+sub read_file {
+    my ($filename) = @_;
+
+    open my $in, '<:encoding(UTF-8)', $filename
+      or die "Could not open '$filename' for reading $!";
+    local $/ = undef;
+    my $all = <$in>;
+    close $in;
+
+    return $all;
+}
+
+sub write_file {
+    my ( $filename, $content ) = @_;
+
+    open my $out, '>:encoding(UTF-8)', $filename
+      or die "Could not open '$filename' for writing $!";
+    print $out $content;
+    close $out;
+
+    return;
+}
+
+sub fillin_dotfiles {
+    my $dot_files = shift;
+
+    for my $dot_file (@$dot_files) {
+        if ( $dot_file =~ /_gitconfig/ ) {
+            print "Enter your email address: ";
+            chomp(my $email = <STDIN>);
+            my $data = read_file($dot_file);
+            $data =~ s/YOUR-EMAIL/$email/;
+            write_file( $dot_file, $data );
+        }
+    }
+}
+
 # MAIN
 
 my @dot_files;
@@ -135,6 +172,8 @@ if ( $os eq 'cygwin' ) {
 } else {
     @dot_files = get_dot_files('linux');
 }
+
+fillin_dotfiles( \@dot_files );
 
 print "\n--> Updating from repo\n";
 system "git pull";
