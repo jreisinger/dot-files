@@ -146,7 +146,7 @@ sub fillin_dotfiles {
     for my $dot_file (@$dot_files) {
         if ( $dot_file =~ /_gitconfig/ ) {
             print "Enter your email address: ";
-            chomp(my $email = <STDIN>);
+            chomp( my $email = <STDIN> );
             my $data = read_file($dot_file);
             $data =~ s/YOUR-EMAIL/$email/;
             write_file( $dot_file, $data );
@@ -165,15 +165,20 @@ if ( $os eq 'cygwin' ) {
     @dot_files = get_dot_files('linux');
 }
 
+print "\n--> Editing dotfiles on the fly\n";
 fillin_dotfiles( \@dot_files );
 
 print "\n--> Updating from repo\n";
 system "git pull";
+
 print "\n--> Copy dot files\n";
 copy_dot_files(@dot_files);
+
 print "\n--> Install vim nerd tree\n";
 install_vim_nerd_tree;
+
 print "\n--> Install vim templates\n";
 install_vim_templates;
+
 print "\n--> Install vim-markdown\n";
 install_vim_markdown;
