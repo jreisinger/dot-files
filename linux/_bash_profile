@@ -1,3 +1,5 @@
+# bash function to backup files
+# Usage: backup <file-to-backup>
 function backup () {
     newname=$1.`date +%Y%m%d.%H%M.bak`;
     mv $1 $newname;
