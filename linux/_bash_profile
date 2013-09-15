@@ -6,3 +6,8 @@ function backup () {
     echo "Backed up $1 to $newname.";
     cp -p $newname $1;
 }
+
+# If ~/.bash_profile exists ~/.profile is not read. I want it to be read.
+if [ -r "$HOME/.profile" ]; then
+    . "$HOME/.profile"
+fi
