@@ -23,4 +23,4 @@ fi
 
 # Environment variables
 export EDITOR=vi
-export PERL5LIB="$PERL5LIB:$HOME/MyUtils/lib"
+
