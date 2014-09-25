@@ -1,6 +1,8 @@
 Personal configuration files
 ============================
 
+NOTE: This repo is obsolete see [dotfiles](https://github.com/jreisinger/dotfiles) instead.
+
 Prerequisites: `curl git`; optional: `vim vim-nox perltidy screen`
 
 Usage:
